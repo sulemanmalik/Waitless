@@ -1,29 +1,37 @@
 const express = require("express");
 const { GraphQLServer } = require("graphql-yoga");
 const bodyParser = require("body-parser");
+const config = require("./config");
+const mongoose = require("mongoose");
+const chalk = require("chalk");
 
-const GraphQLResolvers = require("./src/api/resolvers/index")
+const GraphQLResolvers = require("./src/api/resolvers/index");
 
 const app = express();
 app.use(bodyParser.json());
 
-// const typeDefs = `
-// type Query {
-//   info: String!
-// }
-// `
-
-// // 2
-// const resolvers = {
-//   Query: {
-//     info: () => `This is the API of a Hackernews Clone`
-//   }
-// }
-
-
-
 const server = new GraphQLServer({
-  typeDefs: './src/api/schema/schema.graphql',
+  typeDefs: "./src/api/schema/schema.graphql",
   resolvers: GraphQLResolvers
 });
-server.start(() => console.log(`Server is running on http://localhost:4000`));
+
+
+mongoURI = `mongodb+srv://${config.development.database.user}:${
+  config.development.database.password
+}@waitless-ulvvr.mongodb.net/${
+  config.development.database.db
+}?retryWrites=true`;
+
+const port = 4000;
+
+mongoose
+  .connect(mongoURI, { useNewUrlParser: true })
+  .then(
+    server.start(() =>
+      console.log(
+        chalk.green.bold.inverse("SUCCESS") +
+          `\nRunning a GraphQL API server at localhost:${port}`
+      )
+    )
+  )
+  .catch(err => console.log(chalk.red.bold.inverse("ERROR"), err));
