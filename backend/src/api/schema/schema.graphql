@@ -1,0 +1,35 @@
+# ----------------------------- GraphQL schema types ----------------------------- 
+type Appointment {
+  _id: ID!
+  title: String!
+  date: String!
+  time: String!
+  location: String!
+  doctor: String!
+  visitPurpose: String!
+  aptType: String!
+  status: String!
+}
+
+#-----------------------------  Input schema types  ----------------------------- 
+input AppointmentInput {
+  title: String!
+  date: String!
+  time: String!
+  location: String!
+  doctor: String!
+  visitPurpose: String!
+  aptType: String!
+  status: String!
+}
+
+#-----------------------------  Root Queries  ----------------------------- 
+type Query {
+  appointments: [Appointment!]!
+}
+
+#-----------------------------  Root Mutations  ----------------------------- 
+type Mutation {
+  createAppointment(appointmentInput: AppointmentInput): Appointment
+}
+
