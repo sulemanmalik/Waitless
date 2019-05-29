@@ -1,6 +1,6 @@
-const Appointment = require("../../models/Appointment");
+const Appointment = require("../../../models/Appointment");
 
-const resolvers = {
+module.exports = {
   Query: {
     appointments: async () => {
       try {
@@ -14,7 +14,7 @@ const resolvers = {
     }
   },
   Mutation: {
-    createAppointment: (parent, args) => {
+    createAppointment: async (parent, args) => {
       const appointment = new Appointment({
         title: args.appointmentInput.title,
         date: new Date(args.appointmentInput.date),
@@ -26,17 +26,21 @@ const resolvers = {
         status: args.appointmentInput.status
       });
 
-      return appointment
-        .save()
-        .then(result => {
-          console.log(result);
-          return { ...result._doc, _id: appointment.id };
-        })
-        .catch(err => {
-          throw err;
-        });
+      // const result = await appointment.save();
+
+      // return { ...result._doc, _id: appointment.id };
+
+        return appointment
+          .save()
+          .then(result => {
+            console.log(result);
+            return { ...result._doc, _id: appointment.id };
+          })
+          .catch(err => {
+            throw err;
+          });
+      }
     }
-  }
+  
 };
 
-module.exports = resolvers;

@@ -5,16 +5,16 @@ const config = require("./config");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 
-const GraphQLResolvers = require("./src/api/resolvers/index");
+const typeDefs = require("./src/api/graphql/schema");
+const resolvers = require("./src/api/graphql/resolvers/index");
 
 const app = express();
 app.use(bodyParser.json());
 
 const server = new GraphQLServer({
-  typeDefs: "./src/api/schema/schema.graphql",
-  resolvers: GraphQLResolvers
+  typeDefs,
+  resolvers
 });
-
 
 mongoURI = `mongodb+srv://${config.development.database.user}:${
   config.development.database.password
@@ -30,7 +30,7 @@ mongoose
     server.start(() =>
       console.log(
         chalk.green.bold.inverse("SUCCESS") +
-          `\nRunning a GraphQL API server at localhost:${port}`
+          ` - Running a GraphQL API server at localhost:${port}`
       )
     )
   )

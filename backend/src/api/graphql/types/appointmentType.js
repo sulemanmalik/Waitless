@@ -1,4 +1,4 @@
-# ----------------------------- GraphQL schema types ----------------------------- 
+module.exports = `
 type Appointment {
   _id: ID!
   title: String!
@@ -11,7 +11,6 @@ type Appointment {
   status: String!
 }
 
-#-----------------------------  Input schema types  ----------------------------- 
 input AppointmentInput {
   title: String!
   date: String!
@@ -23,13 +22,11 @@ input AppointmentInput {
   status: String!
 }
 
-#-----------------------------  Root Queries  ----------------------------- 
 type Query {
   appointments: [Appointment!]!
 }
 
-#-----------------------------  Root Mutations  ----------------------------- 
 type Mutation {
   createAppointment(appointmentInput: AppointmentInput): Appointment
 }
-
+`
