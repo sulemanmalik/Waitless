@@ -3,7 +3,7 @@ const Appointment = require("../../../models/Appointment");
 
 const dateToString = date => new Date(date).toISOString();
 
-const patient = async patientId => {
+const patientBind = async patientId => {
   try {
     const patient = await Patient.findById(patientId);
     console.log(patient);
@@ -22,7 +22,7 @@ const patient = async patientId => {
 
 const singleAppointment = async appointmentId => {
   try {
-    const appointment = await Apointment.findById(appointmentId);
+    const appointment = await Appointment.findById(appointmentId);
     return transformAppointment(appointment);
   } catch (err) {
     throw err;
@@ -48,7 +48,7 @@ const transformAppointment = appointment => {
     ...appointment._doc,
     _id: appointment.id,
     date: dateToString(appointment._doc.date),
-    creator: patient.bind(this, appointment.creator)
+    creator: patientBind.bind(this, appointment.creator)
   };
 };
 
@@ -56,12 +56,13 @@ const transformBooking = booking => {
   return {
     ...booking._doc,
     _id: booking.id,
-    patient: patient.bind(this, booking._doc.patient),
+    patient: patientBind.bind(this, booking._doc.patient),
     appointment: singleAppointment.bind(this, booking._doc.appointment),
     createdAt: dateToString(booking._doc.createdAt),
     updatedAt: dateToString(booking._doc.updatedAt)
   };
 };
 
+exports.patientBind = patientBind;
 exports.transformBooking = transformBooking;
 exports.transformAppointment = transformAppointment;
