@@ -27,6 +27,14 @@ type Patient {
   createdAppointments: [Appointment!]
 }
 
+type Booking {
+  _id: ID!
+  appointment: Appointment!
+  patient: Patient!
+  createdAt: String!
+  updatedAt: String!
+}
+
 
 input AppointmentInput {
   title: String!
@@ -54,11 +62,13 @@ input PatientInput {
 type Query {
   appointments: [Appointment!]!
   patients: [Patient!]!
-
+  bookings: [Booking!]!
 }
 
 type Mutation {
   createAppointment(appointmentInput: AppointmentInput): Appointment
   createPatient(patientInput: PatientInput): Patient
+  bookAppointment(appointmentId: ID!): Booking!
+  cancelBooking(bookingId: ID!): Appointment!
 }
 `

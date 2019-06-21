@@ -28,7 +28,7 @@ module.exports = {
         visitPurpose: args.appointmentInput.visitPurpose,
         aptType: args.appointmentInput.aptType,
         status: args.appointmentInput.status,
-        creator: '5cfc5aed74d2a149aed655f7'
+        creator: '5d0d5925ac45147a3d734027'
       });
 
       let createdAppointment;
@@ -41,9 +41,7 @@ module.exports = {
           .save()
           .then(result => {
             createdAppointment = { ...result._doc, _id: appointment.id };
-
-            return Patient.findById('5cfc5aed74d2a149aed655f7')
-            console.log(result);
+            return Patient.findById('5d0d5925ac45147a3d734027')
           })
           .then(patient => {
             if(!patient) {
