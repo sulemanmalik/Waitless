@@ -2,13 +2,19 @@ const Patient = require("../../../models/Patient");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-  Query: {},
+  Query: {
+    patients: async args => {
+      const patients = await Patient.find();
+      return patients
+    }
+  },
   Mutation: {
     createPatient: async (parent, args) => {
       try {
         const existingPatient = await Patient.findOne({
           email: args.patientInput.email
         });
+        
         if (existingPatient) {
           throw new Error("Patient exists already");
         }

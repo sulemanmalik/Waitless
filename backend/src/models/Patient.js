@@ -40,7 +40,13 @@ const patientSchema = new Schema(
     phoneNumber: {
       type: String,
       required: true
-    }
+    },
+    createdAppointments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Appointment"
+      }
+    ]
   },
   options
 );

@@ -9,15 +9,9 @@ type Appointment {
   visitPurpose: String!
   aptType: String!
   status: String!
+  creator: Patient!
 }
 
-type Booking {
-  _id: ID!
-  appointment: Appointment!
-  patient: Patient!
-  createdAt: String!
-  updatedAt: String!
-}
 
 type Patient {
   _id: ID!
@@ -30,13 +24,9 @@ type Patient {
   insuranceNumber: String!
   address: String!
   phoneNumber: String!
+  createdAppointments: [Appointment!]
 }
 
-type AuthData {
-    userId: ID!
-    token: String!
-    tokenExpiration: Int!
-}
 
 input AppointmentInput {
   title: String!
@@ -64,12 +54,11 @@ input PatientInput {
 type Query {
   appointments: [Appointment!]!
   patients: [Patient!]!
-  bookings: [Booking!]!
+
 }
 
 type Mutation {
   createAppointment(appointmentInput: AppointmentInput): Appointment
   createPatient(patientInput: PatientInput): Patient
-  bookAppointment(appointmentId: ID!): Booking
 }
 `

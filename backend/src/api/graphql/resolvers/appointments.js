@@ -1,13 +1,17 @@
 const Appointment = require("../../../models/Appointment");
+const Patient = require('../../../models/Patient');
+const { transformAppointment } = require('./merge')
 
 module.exports = {
   Query: {
     appointments: async () => {
       try {
         const appointments = await Appointment.find();
+        
         return appointments.map(appointment => {
-          return { ...appointment._doc, _id: appointment.id };
+          return transformAppointment(appointment);
         });
+
       } catch (err) {
         throw err;
       }
@@ -23,8 +27,11 @@ module.exports = {
         doctor: args.appointmentInput.doctor,
         visitPurpose: args.appointmentInput.visitPurpose,
         aptType: args.appointmentInput.aptType,
-        status: args.appointmentInput.status
+        status: args.appointmentInput.status,
+        creator: '5cfc5aed74d2a149aed655f7'
       });
+
+      let createdAppointment;
 
       // const result = await appointment.save();
 
@@ -33,9 +40,27 @@ module.exports = {
         return appointment
           .save()
           .then(result => {
+            createdAppointment = { ...result._doc, _id: appointment.id };
+
+            return Patient.findById('5cfc5aed74d2a149aed655f7')
             console.log(result);
-            return { ...result._doc, _id: appointment.id };
           })
+          .then(patient => {
+            if(!patient) {
+              throw new Error("Patient not found")
+            }
+
+            patient.createdAppointments.push(appointment)
+
+            return patient.save();
+          })
+          .then(result => {
+
+            return createdAppointment;
+
+
+          })
+
           .catch(err => {
             throw err;
           });
