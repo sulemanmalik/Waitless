@@ -12,7 +12,6 @@ type Appointment {
   creator: Patient!
 }
 
-
 type Patient {
   _id: ID!
   email: String!
@@ -34,7 +33,6 @@ type Booking {
   createdAt: String!
   updatedAt: String!
 }
-
 
 input AppointmentInput {
   title: String!
@@ -59,10 +57,17 @@ input PatientInput {
   phoneNumber: String!
 }
 
+type AuthData {
+  patientId: ID!
+  token: String!
+  tokenExpiration: Int!
+}
+
 type Query {
   appointments: [Appointment!]!
   patients: [Patient!]!
   bookings: [Booking!]!
+  login(email: String!, password: String!): AuthData
 }
 
 type Mutation {

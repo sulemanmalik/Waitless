@@ -8,7 +8,10 @@ const {
 
 module.exports = {
   Query: {
-    bookings: async (args, req) => {
+    bookings: async (parent, args, req) => {
+      if (!req.isAuth) {
+        throw new Error("Unauthenticated!");
+      }
       try {
         const bookings = await Booking.find();
         return bookings.map(booking => {
@@ -20,32 +23,30 @@ module.exports = {
     }
   },
   Mutation: {
-    bookAppointment: async (parent, args) => {
-      console.log(args);
-      // if(!req.isAuth) {
-      //     throw new Error('Unauthenticated')
-      //   }
+    bookAppointment: async (parent, args, req) => {
+      if (!req.isAuth) {
+        throw new Error("Unauthenticated!");
+      }
       const fetchedAppointment = await Appointment.findOne({
         _id: args.appointmentId
       });
       const booking = new Booking({
-        patient: "5d0d5925ac45147a3d734027",
-        appointment: fetchedAppointment //'5d0c58cdc7fbf677a5b504e7'
+        patient: req.patientId,
+        appointment: fetchedAppointment
       });
       const result = await booking.save();
       return transformBooking(result);
     },
 
-    cancelBooking: async (parent, args) => {
+    cancelBooking: async (parent, args, req) => {
+      if (!req.isAuth) {
+        throw new Error("Unauthenticated!");
+      }
       try {
         const booking = await Booking.findById(args.bookingId).populate(
           "appointment"
         );
-        const appointment = {
-          ...booking.appointment._doc,
-          _id: booking.appointment.id,
-          creator: patientBind.bind(this, booking.appointment._doc.creator)
-        };
+        const appointment = transformAppointment(booking.appointment);
         await Booking.deleteOne({ _id: args.bookingId });
         return appointment;
       } catch (err) {

@@ -17,7 +17,10 @@ module.exports = {
     }
   },
   Mutation: {
-    createAppointment: async (parent, args) => {
+    createAppointment: async (parent, args, req) => {
+      if(!req.isAuth) {
+        throw new Error("Unauthenticated!")
+      }
       const appointment = new Appointment({
         title: args.appointmentInput.title,
         date: new Date(args.appointmentInput.date),
@@ -27,7 +30,7 @@ module.exports = {
         visitPurpose: args.appointmentInput.visitPurpose,
         aptType: args.appointmentInput.aptType,
         status: args.appointmentInput.status,
-        creator: "5d0d6055c0f1b47ca9e56dd7"
+        creator: req.patientId
       });
 
       let createdAppointment;
@@ -39,7 +42,7 @@ module.exports = {
           _id: appointment.id,
           creator: patientBind.bind(this, result._doc.creator)
         };
-        const patient = await Patient.findById("5d0d6055c0f1b47ca9e56dd7");
+        const patient = await Patient.findById(req.patientId);
 
         if (!patient) {
           throw new Error("Patient not found");
