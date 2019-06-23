@@ -5,13 +5,21 @@ const config = require("./config");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 
-const isAuth = require('./src/middleware/is-auth')
+const isAuth = require("./src/middleware/is-auth");
 const typeDefs = require("./src/api/graphql/schema");
 const resolvers = require("./src/api/graphql/resolvers/index");
 
 const app = express();
 app.use(bodyParser.json());
-app.use(isAuth)
+app.use(isAuth);
+app.use((req, res, next) => {
+  res.setHeader("Access-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+});
 
 const server = new GraphQLServer({
   typeDefs,
