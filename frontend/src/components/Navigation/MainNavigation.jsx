@@ -6,6 +6,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
+import AuthContext from "../../context/auth-context";
+
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -19,80 +23,115 @@ const useStyles = makeStyles(theme => ({
     fontSize: "2rem"
   },
   navbar: {
-    backgroundColor: "transparent",
-    boxShadow: "none"
+    backgroundColor: "white"
   },
   links: {
     color: "#34495e",
     textDecoration: "none",
     marginRight: 80,
     "&:hover": {
-      color: "#16a085"
+      color: "#16a085",
+    }
+  },
+  signup: {
+    color: "#34495e",
+    textDecoration: "white",
+    marginRight: 80,
+    border: "1px solid #16a085",
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: "#16a085",
+    "&:hover": {
+      color: "white",
+      boxShadow: "20px",
+      transition: "box-shadow .3s"
     }
   }
 }));
 
+const style = {
+  login: {
+    border: "1px solid #16a085",
+    padding: 10,
+    borderRadius: 50,
+    color: "#16a085",
+    "&:hover": {
+      backgroundColor: "#16a085",
+      color: "blue"
+    }
+  },
+  signup: {
+    border: "1px solid #16a085",
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: "#16a085",
+    color: "white",
+    "&:hover": {
+      color: "white"
+    }
+  }
+};
+
 const MainNavigation = props => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.navbar}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Menu"
-          />
-          <Typography variant="h6" className={classes.title}>
-            Waitless
-          </Typography>
+    <AuthContext.Consumer>
+      {(context) => {
+        return (
+          <div className={classes.root}>
+            <AppBar position="fixed" className={classes.navbar}>
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="Menu"
+                />
+                <Typography variant="h6" className={classes.title}>
+                  <NavLink to="/" className={classes.links}>
+                    Waitless
+                  </NavLink>
+                </Typography>
 
-          <Typography>
-            <NavLink to="/appointments" className={classes.links}>
-              Appointments
-            </NavLink>
-          </Typography>
-          <Typography>
-            <NavLink to="/bookings" className={classes.links}>
-              Bookings
-            </NavLink>
-          </Typography>
-        
-          <Typography>
-            <NavLink to="/" className={classes.links}>
-              Login
-            </NavLink>
-          </Typography>
-          <Typography>
-            <NavLink to="/signup" className={classes.links}>
-              Signup
-            </NavLink>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+                {context.token && <Typography>
+                  <NavLink to="/appointments" className={classes.links}>
+                    Appointments
+                  </NavLink>
+                </Typography>}
+
+                {context.token &&<Typography>
+                  <NavLink to="/bookings" className={classes.links}>
+                    Bookings
+                  </NavLink>
+                </Typography>}
+
+                {!context.token && <Typography>
+                  <NavLink
+                    to="/login"
+                    className={classes.links}
+                  >
+                    Login
+                  </NavLink>
+                </Typography>}
+
+                {!context.token &&<Typography>
+                  <NavLink
+                    to="/signup"
+                    className={classes.signup}
+                  >
+                    Signup
+                  </NavLink>
+                </Typography>}
+
+              </Toolbar>
+            </AppBar>
+          </div>
+        );
+      }}
+    </AuthContext.Consumer>
   );
 
-  //   <header>
-  //     <div className="main-navigation__logo">
-  //       <h1>Waitless</h1>
-  //     </div>
 
-  //     <nav className="main-navigation__item">
-  //       <ul>
-  //         <li>
-  //           <NavLink to="/appointments">Appointments</NavLink>
-  //         </li>
-  //         <li>
-  //           <NavLink to="/bookings">Bookings</NavLink>
-  //         </li>
-  //         <li>
-  //           <NavLink to="/auth">Auth</NavLink>
-  //         </li>
-  //       </ul>
-  //     </nav>
-  //   </header>
 };
 
 export default MainNavigation;

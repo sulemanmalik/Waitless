@@ -20,8 +20,11 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.common.white,
     },
   },
+  field: {
+    borderColor: "green"
+  },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: '15vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -83,7 +86,16 @@ const Signup = () => {
       headers: {
         'Content-Type': 'application/json'
       }
-
+    }).then(res => {
+        if(res.status !== 200 && res.status !== 201) {
+            throw new Error("failed")
+        }
+        return res.json()
+    }).then(resData => {
+        console.log(resData)
+    })
+    .catch(err => {
+        console.log(err)
     })
   }
 

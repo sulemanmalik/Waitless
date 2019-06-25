@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import AuthContext from '../context/auth-context'
+
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
@@ -19,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: '25vh',
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
@@ -48,29 +50,22 @@ const Login = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitHandler = (event) => {
+  // static contextType = AuthContext;
+
+  const submitHandler = (event) => { 
     event.preventDefault();
 
-    const requestBody = {
+    let requestBody = {
       query: `
-        mutation {
-          createPatient(patientInput: {
-            email: "${email}",
-            password:"${password}",
-            firstName: "User",
-            lastName:"Johnson",
-            dateOfBirth:"March 23, 1997",
-            medicareNumber:"232191323",
-            insuranceNumber:"AH89HDI834J",
-            address:"111 main street",
-            phoneNumber:"5148765432"
-          }) {
-            _id
-            email
+        query{
+          login(email: "${email}", password: "${password}") {
+            patientId
+            token
+            tokenExpiration
           }
         }
+      
       `
-
     }
 
     fetch('http://localhost:4000', {
@@ -80,7 +75,21 @@ const Login = props => {
         'Content-Type': 'application/json'
       }
 
-    })
+    }).then(res => {
+      if(res.status !== 200 && res.status !== 201) {
+          throw new Error("failed")
+      }
+      return res.json()
+  }).then(resData => {
+      if(resData.data.login.token) {
+        console.log(resData.data)
+        // contextType.login(resData.data.login.token, resData.data.login.patientId, resData.data.login.tokenExpiration)
+        // contextType.login(resData.data.login.token, resData.data.login.patientId, resData.data.login.tokenExpiration)
+      }
+  })
+  .catch(err => {
+      console.log(err)
+  })
 
   }
 
