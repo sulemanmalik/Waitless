@@ -44,9 +44,9 @@ function App() {
           <Switch>
             <Redirect from="/" to="/home" exact />
             <Route path="/home" component={HomePage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/bookings" component={BookingsPage} />
-            <Route path="/appointments" component={AppointmentsPage} />
+            {!token && <Route path="/login" component={LoginPage} />}
+            {token && <Route path="/bookings" component={BookingsPage} />}
+            {token && <Route path="/appointments" component={AppointmentsPage} />}
             <Route path="/signup" component={SignupPage} />
           </Switch>
         </AuthContext.Provider>

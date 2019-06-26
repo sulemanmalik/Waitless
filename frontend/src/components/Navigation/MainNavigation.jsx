@@ -8,8 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 
 import AuthContext from "../../context/auth-context";
 
-
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -30,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     textDecoration: "none",
     marginRight: 80,
     "&:hover": {
-      color: "#16a085",
+      color: "#16a085"
     }
   },
   signup: {
@@ -49,14 +47,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-
 const MainNavigation = props => {
   const classes = useStyles();
-  const auth = useContext(AuthContext)
+  const auth = useContext(AuthContext);
   return (
     <AuthContext.Consumer>
-      {(context) => {
+      {context => {
         return (
           <div className={classes.root}>
             <AppBar position="fixed" className={classes.navbar}>
@@ -73,42 +69,49 @@ const MainNavigation = props => {
                   </NavLink>
                 </Typography>
 
-                {context.token && <Typography>
-                  <NavLink to="/appointments" className={classes.links}>
-                    Appointments
-                  </NavLink>
-                </Typography>}
+                {context.token && (
+                  <Typography>
+                    <NavLink to="/appointments" className={classes.links}>
+                      Appointments
+                    </NavLink>
+                  </Typography>
+                )}
 
-                {context.token &&<Typography>
-                  <NavLink to="/bookings" className={classes.links}>
-                    Bookings
-                  </NavLink>
-                </Typography>}
+                {context.token && (
+                  <Typography>
+                    <NavLink to="/bookings" className={classes.links}>
+                      Bookings
+                    </NavLink>
+                  </Typography>
+                )}
 
-                {context.token &&<Typography>
-                  <NavLink to="/bookings" className={classes.links} onClick={auth.logout}>
-                    Logout
-                  </NavLink>
-                </Typography>}
+                {context.token && (
+                  <Typography>
+                    <NavLink
+                      to="/bookings"
+                      className={classes.links}
+                      onClick={auth.logout}
+                    >
+                      Logout
+                    </NavLink>
+                  </Typography>
+                )}
 
-                {!context.token && <Typography>
-                  <NavLink
-                    to="/login"
-                    className={classes.links}
-                  >
-                    Login
-                  </NavLink>
-                </Typography>}
+                {!context.token && (
+                  <Typography>
+                    <NavLink to="/login" className={classes.links}>
+                      Login
+                    </NavLink>
+                  </Typography>
+                )}
 
-                {!context.token &&<Typography>
-                  <NavLink
-                    to="/signup"
-                    className={classes.signup}
-                  >
-                    Signup
-                  </NavLink>
-                </Typography>}
-
+                {!context.token && (
+                  <Typography>
+                    <NavLink to="/signup" className={classes.signup}>
+                      Signup
+                    </NavLink>
+                  </Typography>
+                )}
               </Toolbar>
             </AppBar>
           </div>
@@ -116,8 +119,6 @@ const MainNavigation = props => {
       }}
     </AuthContext.Consumer>
   );
-
-
 };
 
 export default MainNavigation;
