@@ -36,7 +36,7 @@ jobs:
       # run tests!
       # - run: yarn test
 
-      - run: yarn build
+      - run: cd frontend; yarn build
 
       # - run: yarn netlify:deploy
 
