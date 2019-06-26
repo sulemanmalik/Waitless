@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Grid, Paper, Card } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import React from "react";
+import { Grid} from "@material-ui/core";
 
-import img from "../images/wbg.jpg";
+
+// import img from "../images/wbg.jpg";
 
 const Home = props => {
   return (
