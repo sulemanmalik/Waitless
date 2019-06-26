@@ -1,9 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
+import { Grid } from "@material-ui/core";
 
-class Bookings extends Component {
-  render() {
-    return <h1>Bookings page</h1>;
-  }
-}
+const Bookings = props => {
+  return (
+    <Grid container justify="center" style={{ marginTop: 100 }}>
+      <h1>Bookings page</h1>
+    </Grid>
+  );
+};
 
 export default Bookings;

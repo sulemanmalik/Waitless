@@ -23,6 +23,8 @@ const Home = props => {
         }}
       /> */}
 
+      <h1 style={{paddingTop: "200px"}}> Home page</h1>
+
       
     </Grid>
   );

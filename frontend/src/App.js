@@ -8,6 +8,7 @@ import AppointmentsPage from "./pages/Appointments";
 import BookingsPage from "./pages/Bookings";
 import SignupPage from "./pages/Signup";
 import HomePage from "./pages/Home";
+import DashboardPage from "./pages/Dashboard"
 
 //Components
 import MainNavigation from "./components/Navigation/MainNavigation";
@@ -42,12 +43,20 @@ function App() {
         >
           <MainNavigation />
           <Switch>
-            <Redirect from="/" to="/home" exact />
-            <Route path="/home" component={HomePage} />
+            {!token && <Redirect from="/" to="/home" exact />}
+            {!token && <Redirect from="/dashboard" to="/home" exact />}
+            {!token && <Redirect from="/bookings" to="/home" exact />}
+            {!token && <Redirect from="/appointmentsgit " to="/home" exact />}
+            {!token && <Route path="/home" component={HomePage} />}
             {!token && <Route path="/login" component={LoginPage} />}
+            {!token && <Route path="/signup" component={SignupPage} />}
+
+            {token && <Redirect from="/" to="/dashboard" exact/>}
+            {token && <Redirect from="/login" to="/dashboard"/>}
+            {token && <Redirect from="/home" to="/dashboard"/>}
             {token && <Route path="/bookings" component={BookingsPage} />}
             {token && <Route path="/appointments" component={AppointmentsPage} />}
-            <Route path="/signup" component={SignupPage} />
+            {token && <Route path="/dashboard" component={DashboardPage}/>}
           </Switch>
         </AuthContext.Provider>
       </React.Fragment>
