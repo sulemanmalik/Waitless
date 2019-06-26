@@ -4,5 +4,4 @@ export default React.createContext({
     patientId: null,
     login: (token, patientId, tokenExpiration) => {},
     logout: () => {}
-
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -49,31 +49,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const style = {
-  login: {
-    border: "1px solid #16a085",
-    padding: 10,
-    borderRadius: 50,
-    color: "#16a085",
-    "&:hover": {
-      backgroundColor: "#16a085",
-      color: "blue"
-    }
-  },
-  signup: {
-    border: "1px solid #16a085",
-    padding: 10,
-    borderRadius: 50,
-    backgroundColor: "#16a085",
-    color: "white",
-    "&:hover": {
-      color: "white"
-    }
-  }
-};
+
 
 const MainNavigation = props => {
   const classes = useStyles();
+  const auth = useContext(AuthContext)
   return (
     <AuthContext.Consumer>
       {(context) => {
@@ -102,6 +82,12 @@ const MainNavigation = props => {
                 {context.token &&<Typography>
                   <NavLink to="/bookings" className={classes.links}>
                     Bookings
+                  </NavLink>
+                </Typography>}
+
+                {context.token &&<Typography>
+                  <NavLink to="/bookings" className={classes.links} onClick={auth.logout}>
+                    Logout
                   </NavLink>
                 </Typography>}
 

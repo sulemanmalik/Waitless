@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import AuthContext from '../context/auth-context'
+import AuthContext from "../context/auth-context";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   paper: {
-    marginTop: '25vh',
+    marginTop: "25vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
@@ -31,14 +31,14 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", 
+    width: "100%",
     marginTop: theme.spacing(1)
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
     backgroundColor: "#27ae60",
-    '&:hover': {
-      backgroundColor: '#27ae60'
+    "&:hover": {
+      backgroundColor: "#27ae60"
     },
     color: "white"
   }
@@ -46,13 +46,13 @@ const useStyles = makeStyles(theme => ({
 
 const Login = props => {
   const classes = useStyles();
+  const auth = useContext(AuthContext)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // static contextType = AuthContext;
 
-  const submitHandler = (event) => { 
+  const submitHandler = event => {
     event.preventDefault();
 
     let requestBody = {
@@ -66,99 +66,106 @@ const Login = props => {
         }
       
       `
-    }
+    };
 
-    fetch('http://localhost:4000', {
-      method: 'POST',
+    fetch("http://localhost:4000", {
+      method: "POST",
       body: JSON.stringify(requestBody),
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       }
-
-    }).then(res => {
-      if(res.status !== 200 && res.status !== 201) {
-          throw new Error("failed")
-      }
-      return res.json()
-  }).then(resData => {
-      if(resData.data.login.token) {
-        console.log(resData.data)
-        // contextType.login(resData.data.login.token, resData.data.login.patientId, resData.data.login.tokenExpiration)
-        // contextType.login(resData.data.login.token, resData.data.login.patientId, resData.data.login.tokenExpiration)
-      }
-  })
-  .catch(err => {
-      console.log(err)
-  })
-
-  }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error("failed");
+        }
+        return res.json();
+      })
+      .then(resData => {
+        if (resData.data.login.token) {
+          console.log(resData.data);
+          auth.login(resData.data.login.token,
+              resData.data.login.patientId,
+              resData.data.login.tokenExpiration)
+              
+          // contextType.login(resData.data.login.token, resData.data.login.patientId, resData.data.login.tokenExpiration)
+          // login.login(
+          //   resData.data.login.token,
+          //   resData.data.login.patientId,
+          //   resData.data.login.tokenExpiration
+          // );
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   return (
-    
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            className={classes.submit}
-            onClick={submitHandler}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={classes.submit}
+              onClick={submitHandler}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+          </form>
+        </div>
+      </Container>
   );
 };
 

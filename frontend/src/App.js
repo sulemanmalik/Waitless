@@ -28,6 +28,7 @@ function App() {
     setToken(null);
     setPatientId(null);
   };
+  
   return (
     <BrowserRouter>
       <React.Fragment>
