@@ -46,7 +46,7 @@ function App() {
             {!token && <Redirect from="/" to="/home" exact />}
             {!token && <Redirect from="/dashboard" to="/home" exact />}
             {!token && <Redirect from="/bookings" to="/home" exact />}
-            {!token && <Redirect from="/appointmentsgit " to="/home" exact />}
+            {!token && <Redirect from="/appointments" to="/home" exact />}
             {!token && <Route path="/home" component={HomePage} />}
             {!token && <Route path="/login" component={LoginPage} />}
             {!token && <Route path="/signup" component={SignupPage} />}

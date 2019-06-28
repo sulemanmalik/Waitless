@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   paper: {
-    marginTop: "25vh",
+    marginTop: "18vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center"

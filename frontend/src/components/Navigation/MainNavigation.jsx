@@ -6,6 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
+
 import AuthContext from "../../context/auth-context";
 
 const useStyles = makeStyles(theme => ({
@@ -17,32 +18,59 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    color: "black",
-    fontSize: "2rem"
-  },
-  navbar: {
-    backgroundColor: "white"
-  },
-  links: {
-    color: "#34495e",
+    color: "white",
+    fontSize: "2rem",
     textDecoration: "none",
-    marginRight: 80,
+    fontWeight: 900,
     "&:hover": {
       color: "#16a085"
     }
   },
-  signup: {
-    color: "#34495e",
-    textDecoration: "white",
+  navbar: {
+    backgroundColor: "#2C3A47"
+  },
+  links: {
+    color: "white",
+    textDecoration: "none",
     marginRight: 80,
-    border: "1px solid #16a085",
-    padding: 10,
-    borderRadius: 50,
-    backgroundColor: "#16a085",
+    fontWeight: 900,
+    textTransform: "uppercase",
     "&:hover": {
-      color: "white",
-      boxShadow: "20px",
-      transition: "box-shadow .3s"
+      color: "#16a085",
+
+    }
+  },
+  signup: {
+    cursor: "pointer",
+    background: "#55E6C1",
+    fontSize: "18px",
+    borderRadius: "30px",
+    color: "#2C3A47",
+    border: "2px solid #55E6C1",
+    margin: "0 2em",
+    padding: "0.5em 1em",
+    transition: "0.1s all ease-out",
+    textDecoration: "none",
+    "&:hover": {
+      backgroundColor: "#8fffe2",
+      border: "2px solid #8fffe2",
+      color: "#2C3A47"
+    }
+  }, 
+  login: {
+    cursor: "pointer",
+    background: "transparent",
+    fontSize: "18px",
+    borderRadius: "30px",
+    color: "#55E6C1",
+    border: "2px solid #55E6C1",
+    margin: "0 2em",
+    padding: "0.5em 1em",
+    transition: "0.1s all ease-out",
+    textDecoration: "none",
+    "&:hover": {
+      backgroundColor: "#55E6C1",
+      color: "white"
     }
   }
 }));
@@ -55,7 +83,7 @@ const MainNavigation = props => {
       {context => {
         return (
           <div className={classes.root}>
-            <AppBar position="fixed" className={classes.navbar}>
+            <AppBar position="sticky" className={classes.navbar}>
               <Toolbar>
                 <IconButton
                   edge="start"
@@ -64,8 +92,8 @@ const MainNavigation = props => {
                   aria-label="Menu"
                 />
                 <Typography variant="h6" className={classes.title}>
-                  <NavLink to="/" className={classes.links}>
-                    Waitless
+                  <NavLink to="/" className={classes.title}>
+                    waitless
                   </NavLink>
                 </Typography>
 
@@ -99,7 +127,7 @@ const MainNavigation = props => {
 
                 {!context.token && (
                   <Typography>
-                    <NavLink to="/login" className={classes.links}>
+                    <NavLink to="/login" className={classes.login}>
                       Login
                     </NavLink>
                   </Typography>
