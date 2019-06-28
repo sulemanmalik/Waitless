@@ -12,7 +12,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import AuthContext from "../context/auth-context";
+import AuthContext from "../../Shared/Authentication/AuthContext"
+
+import loginAPI from "../../api/loginAPI";
+
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -51,48 +54,53 @@ const Login = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitHandler = event => {
-    event.preventDefault();
-
-    let requestBody = {
-      query: `
-        query{
-          login(email: "${email}", password: "${password}") {
-            patientId
-            token
-            tokenExpiration
-          }
-        }
+  // const submitHandler = event => {
+  //   event.preventDefault();
+  //   let requestBody = {
+  //     query: `
+  //       query{
+  //         login(email: "${email}", password: "${password}") {
+  //           patientId
+  //           token
+  //           tokenExpiration
+  //         }
+  //       }
       
-      `
-    };
+  //     `
+  //   };
 
-    fetch("http://localhost:4000", {
-      method: "POST",
-      body: JSON.stringify(requestBody),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw new Error("failed");
-        }
-        return res.json();
-      })
-      .then(resData => {
-        if (resData.data.login.token) {
-          auth.login(
-            resData.data.login.token,
-            resData.data.login.patientId,
-            resData.data.login.tokenExpiration
-          );
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+  //   fetch("http://localhost:4000", {
+  //     method: "POST",
+  //     body: JSON.stringify(requestBody),
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   })
+  //     .then(res => {
+  //       if (res.status !== 200 && res.status !== 201) {
+  //         throw new Error("failed");
+  //       }
+  //       return res.json();
+  //     })
+  //     .then(resData => {
+  //       if (resData.data.login.token) {
+  //         auth.login(
+  //           resData.data.login.token,
+  //           resData.data.login.patientId,
+  //           resData.data.login.tokenExpiration
+  //         );
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+
+  const login = event => {
+    event.preventDefault();
+    loginAPI.LOGIN(email, password, auth)
+  }
+
 
   return (
     <AuthContext.Consumer>
@@ -143,7 +151,7 @@ const Login = props => {
                   fullWidth
                   variant="contained"
                   className={classes.submit}
-                  onClick={submitHandler}
+                  onClick={login}
                 >
                   Sign In
                 </Button>

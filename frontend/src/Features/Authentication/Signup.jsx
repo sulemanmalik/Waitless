@@ -1,42 +1,43 @@
-import React, {useState} from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 
+import signupAPI from "../../api/signupAPI";
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
+  "@global": {
     body: {
-      backgroundColor: theme.palette.common.white,
-    },
+      backgroundColor: theme.palette.common.white
+    }
   },
   field: {
     borderColor: "green"
   },
   paper: {
-    marginTop: '7vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    marginTop: "7vh",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+    margin: theme.spacing(3, 0, 2)
+  }
 }));
 
 const Signup = () => {
@@ -52,49 +53,20 @@ const Signup = () => {
   const [address, setAddress] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
 
-  const submitHandler = (event) => {
-      event.preventDefault();
-
-      const requestBody = {
-        query: `
-          mutation {
-            createPatient(patientInput: {
-              email: "${email}",
-              password:"${password}",
-              firstName: "${firstName}",
-              lastName:"${lastName}",
-              dateOfBirth:"${dob}",
-              medicareNumber:"${medicareNum}",
-              insuranceNumber:"${insuranceNum}",
-              address:"${address}",
-              phoneNumber:"${phoneNum}"
-            }) {
-              _id
-              email
-            }
-          }
-        `
-  
-      }
-
-      fetch('http://localhost:4000', {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => {
-        if(res.status !== 200 && res.status !== 201) {
-            throw new Error("failed")
-        }
-        return res.json()
-    }).then(resData => {
-        console.log(resData)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-  }
+  const signup = event => {
+    event.preventDefault();
+    signupAPI.SIGNUP(
+      email,
+      password,
+      firstName,
+      lastName,
+      dob,
+      medicareNum,
+      insuranceNum,
+      address,
+      phoneNum
+    );
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -232,9 +204,6 @@ const Signup = () => {
                 onChange={e => setPhoneNum(e.target.value)}
               />
             </Grid>
-
-
-            
           </Grid>
           <Button
             type="submit"
@@ -242,7 +211,7 @@ const Signup = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={submitHandler}
+            onClick={signup}
           >
             Sign Up
           </Button>
@@ -255,9 +224,8 @@ const Signup = () => {
           </Grid>
         </form>
       </div>
-    
     </Container>
   );
-}
+};
 
-export default Signup
+export default Signup;

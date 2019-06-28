@@ -6,8 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
-
-import AuthContext from "../../context/auth-context";
+import AuthContext from "../Authentication/AuthContext"
 
 const useStyles = makeStyles(theme => ({
   root: {

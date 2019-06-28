@@ -2,19 +2,24 @@ import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 
-//Pages
-import LoginPage from "./pages/Login";
-import AppointmentsPage from "./pages/Appointments";
-import BookingsPage from "./pages/Bookings";
-import SignupPage from "./pages/Signup";
+//Features
+import LoginPage from "./Features/Authentication/Login"
+import AppointmentsPage from "./Features/Appointments/Appointments";
+import BookingsPage from "./Features/Bookings/Bookings"
+import SignupPage  from "./Features/Authentication/Signup"
+import DashboardPage from "./Features/Dashboard/Dashboard"
+
 import HomePage from "./pages/Home";
-import DashboardPage from "./pages/Dashboard"
+
 
 //Components
-import MainNavigation from "./components/Navigation/MainNavigation";
+// import MainNavigation from "./components/Navigation/MainNavigation";
+
+//Shared
+import Navigation from "./Shared/Navigation/Navigation"
 
 //Context
-import AuthContext from "./context/auth-context";
+import AuthContext from "./Shared/Authentication/AuthContext"
 
 function App() {
   const [token, setToken] = useState("");
@@ -41,7 +46,7 @@ function App() {
             logout: logout
           }}
         >
-          <MainNavigation />
+          <Navigation />
           <Switch>
             {!token && <Redirect from="/" to="/home" exact />}
             {!token && <Redirect from="/dashboard" to="/home" exact />}

@@ -1,12 +1,12 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-const Bookings = props => {
+const Appointments = props => {
   return (
     <Grid container justify="center" style={{ marginTop: 100 }}>
-      <h1>Bookings page</h1>
+      <h1>Appointments pagedd</h1>
     </Grid>
   );
 };
 
-export default Bookings;
+export default Appointments;  
