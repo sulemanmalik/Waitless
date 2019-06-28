@@ -12,7 +12,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import AuthContext from "../Shared/Authentication/AuthContext";
+import AuthContext from "../../Shared/Authentication/AuthContext"
+
+import loginAPI from "../../api/loginAPI";
+
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -53,7 +56,6 @@ const Login = props => {
 
   const submitHandler = event => {
     event.preventDefault();
-
     let requestBody = {
       query: `
         query{
@@ -93,6 +95,12 @@ const Login = props => {
         console.log(err);
       });
   };
+
+  const login = event => {
+    event.preventDefault();
+    loginAPI.LOGIN(email, password, auth)
+  }
+
 
   return (
     <AuthContext.Consumer>
@@ -143,7 +151,7 @@ const Login = props => {
                   fullWidth
                   variant="contained"
                   className={classes.submit}
-                  onClick={submitHandler}
+                  onClick={login}
                 >
                   Sign In
                 </Button>
