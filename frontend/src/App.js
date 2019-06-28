@@ -11,10 +11,13 @@ import HomePage from "./pages/Home";
 import DashboardPage from "./pages/Dashboard"
 
 //Components
-import MainNavigation from "./components/Navigation/MainNavigation";
+// import MainNavigation from "./components/Navigation/MainNavigation";
+
+//Shared
+import Navigation from "./Shared/Navigation/Navigation"
 
 //Context
-import AuthContext from "./context/auth-context";
+import AuthContext from "./Shared/Authentication/AuthContext"
 
 function App() {
   const [token, setToken] = useState("");
@@ -41,7 +44,7 @@ function App() {
             logout: logout
           }}
         >
-          <MainNavigation />
+          <Navigation />
           <Switch>
             {!token && <Redirect from="/" to="/home" exact />}
             {!token && <Redirect from="/dashboard" to="/home" exact />}
