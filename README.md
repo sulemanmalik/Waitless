@@ -1,5 +1,6 @@
-# Waitless - Simplifying appointments 🧬
+# Waitless
+Welcome to waitless! A web application built for doctors and made for patients.
 
 ### To run the application
-1. run `npx nodemon app.js` from `backend/` to launch the graphql server
-2. run `yarn start` from `backend` to launch the react app
+1. run `yarn start` from `backend/` to launch the graphql server
+2. run `yarn start` from `frontend/` to launch the react app
