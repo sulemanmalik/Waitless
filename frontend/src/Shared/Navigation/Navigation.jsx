@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    color: "white",
+    color: "black",
     fontSize: "2rem",
     textDecoration: "none",
     fontWeight: 900,
@@ -26,7 +26,8 @@ const useStyles = makeStyles(theme => ({
     }
   },
   navbar: {
-    backgroundColor: "#2C3A47"
+    backgroundColor: "white",
+
   },
   links: {
     color: "white",
@@ -82,7 +83,7 @@ const MainNavigation = props => {
       {context => {
         return (
           <div className={classes.root}>
-            <AppBar position="sticky" className={classes.navbar}>
+            <AppBar position="fixed" className={classes.navbar}>
               <Toolbar>
                 <IconButton
                   edge="start"
@@ -92,7 +93,7 @@ const MainNavigation = props => {
                 />
                 <Typography variant="h6" className={classes.title}>
                   <NavLink to="/" className={classes.title}>
-                    waitless
+                    w
                   </NavLink>
                 </Typography>
 

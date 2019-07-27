@@ -1,13 +1,26 @@
 import React from "react";
-import {
-  Grid,
-  makeStyles,
-  Container,
-  Typography,
-  Card
-} from "@material-ui/core";
+import { Grid, makeStyles, Typography, Card, Button } from "@material-ui/core";
+
+import img from "../assets/doc.png";
+// import bg from "../assets/bg.jpg";
 
 const useStyles = makeStyles(theme => ({
+  hero: {
+    background: "transparent",
+    margin: theme.spacing(8)
+  },
+  heroBook: {
+    marginLeft: theme.spacing(8)
+  },
+  heroImage: {
+    margin: theme.spacing(8)
+  },
+  heroText: {
+    color:"grey"
+  },
+  heroTitle: {
+    color: "black"
+  },
   icon: {
     marginRight: theme.spacing(2)
   },
@@ -27,60 +40,134 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(8)
   },
   card: {
-    height: "100%",
+    height: "20em",
+    width: "20vw",
+    borderRadius: "20px",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);"
   },
   cardMedia: {
-    paddingTop: "56.25%" // 16:9
+    display: "flex",
+    direction: "row",
+    justify: "center"
   },
   cardContent: {
     flexGrow: 1
   },
+
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: "auto",
+    display: "block"
+  },
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
+  },
+  bookButton: {
+    backgroundColor: "beige",
+    padding: "10px 30px 10px 30px",
+    borderRadius: "30px",
+    '&:hover': {
+      backgroundColor: "pink"
+    }
   }
 }));
 
 const Home = props => {
   const classes = useStyles();
   return (
-    <main>
-      <div className={classes.heroContent}>
-        <Container maxWidth="lg">
-          <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
+       
+       <Grid>
+        {/* main  hero */}
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{
+            minHeight: "100vh",
+            backgroundColor: "transparent"
+          }}
+        >
+          <Grid
+            container
+            direction="row"
+            wrap="nowrap"
+            alignItems="center"
+            justify="space-between"
+            style={{
+              backgroundColor: "transparent",
+              width: "100vw"
+            }}
           >
-            Home Page
-          </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="textSecondary"
-            paragraph
-          >
-            Headline text.
-          </Typography>
-
-          <div className={classes.heroButtons}>
-            <Grid container spacing={2} justify="center">
-              <Grid item>
-                <Card className={classes.heroCards}>card 1</Card>
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justify="center"
+            >
+              <Grid item className={classes.hero}>
+              <Typography variant="h1" className={classes.heroTitle}>
+                Waitless
+                </Typography>
+                <Typography variant="h4" className={classes.heroText}>
+                  built for doctors made for patients
+                </Typography>
               </Grid>
 
-              <Grid item>
-                <Card className={classes.heroCards}>card 2</Card>
-              </Grid>
+              {/* <Grid item xs={4} className={classes.heroBook}>
+              <Card style={{ padding: 20, borderRadius: "20px" }}>
+                <TextField
+                  fullWidth="true"
+                  label="search specialties"
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Card>
+            </Grid> */}
             </Grid>
-          </div>
-        </Container>
-      </div>
-    </main>
+
+            <Grid item className={classes.heroImage}>
+              <img src={img} alt="img" style={{ width: "800px" }} />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        {/* bookcard */}
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{
+            height: "50vh",
+            backgroundImage: "",
+            backgroundColor:" Pink"
+          }}
+        >
+              <Card
+                className={classes.card}
+                style={{ padding: 4, height: "10em", width: "90em" }}
+              >
+                <Grid container direction="row" justify="center" style={{backgroundColor: "yellow", height:"100%"}}>
+
+                    <Button className={classes.bookButton}>Book</Button>
+
+                </Grid>
+
+              </Card>
+
+
+
+        </Grid>
+      </Grid>
+
   );
 };
 

@@ -4,12 +4,14 @@ const bodyParser = require("body-parser");
 const config = require("./config");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
+const cors = require("cors");
 
 const isAuth = require("./src/middleware/is-auth");
 const typeDefs = require("./src/api/graphql/schema");
 const resolvers = require("./src/api/graphql/resolvers/index");
 
 const app = express();
+
 app.use(bodyParser.json());
 app.use(isAuth);
 app.use((req, res, next) => {
@@ -20,6 +22,7 @@ app.use((req, res, next) => {
     return res.sendStatus(200);
   }
 });
+app.use(cors())
 
 const server = new GraphQLServer({
   typeDefs,
