@@ -67,6 +67,14 @@ input PatientInput {
   phoneNumber: String!
 }
 
+input DoctorInput {
+  email: String!
+  password: String
+  firstName: String!
+  lastName: String!
+  jobTitle: String!
+}
+
 type AuthData {
   patientId: ID!
   token: String!
@@ -76,6 +84,7 @@ type AuthData {
 type Query {
   appointments: [Appointment!]!
   patients: [Patient!]!
+  doctors: [Doctor!]!
   bookings: [Booking!]!
   login(email: String!, password: String!): AuthData
 }
@@ -83,6 +92,7 @@ type Query {
 type Mutation {
   createAppointment(appointmentInput: AppointmentInput): Appointment
   createPatient(patientInput: PatientInput): Patient
+  createDoctor(doctorInput: DoctorInput): Doctor
   bookAppointment(appointmentId: ID!): Booking!
   cancelBooking(bookingId: ID!): Appointment!
 }
