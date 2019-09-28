@@ -26,6 +26,16 @@ type Patient {
   createdAppointments: [Appointment!]
 }
 
+type Doctor {
+  _id: ID!
+  email: String!
+  password: String
+  firstName: String!
+  lastName: String!
+  jobTitle: String!
+  scheduledAppointments: [Appointment!]
+}
+
 type Booking {
   _id: ID!
   appointment: Appointment!
