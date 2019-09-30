@@ -56,7 +56,24 @@ const useStyles = makeStyles(theme => ({
       border: "2px solid #8fffe2",
       color: "#2C3A47"
     }
-  }, 
+  },
+  signupdoctor: {
+    cursor: "pointer",
+    background: "#55E6C1",
+    fontSize: "18px",
+    borderRadius: "30px",
+    color: "#2C3A47",
+    border: "2px solid #55E6C1",
+    margin: "0 2em",
+    padding: "0.5em 1em",
+    transition: "0.1s all ease-out",
+    textDecoration: "none",
+    "&:hover": {
+      backgroundColor: "#8fffe2",
+      border: "2px solid #8fffe2",
+      color: "#2C3A47"
+    }
+  },
   login: {
     cursor: "pointer",
     background: "transparent",
@@ -139,6 +156,14 @@ const MainNavigation = props => {
                       Signup
                     </NavLink>
                   </Typography>
+                )}
+
+                {!context.token && (
+                    <Typography>
+                      <NavLink to="/signupdoctor" className={classes.signupdoctor}>
+                        Doctor Signup
+                      </NavLink>
+                    </Typography>
                 )}
               </Toolbar>
             </AppBar>
