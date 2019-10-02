@@ -7,6 +7,7 @@ import LoginPage from "./pages/Login";
 import AppointmentsPage from "./pages/Appointments";
 import BookingsPage from "./pages/Bookings";
 import SignupPage from "./pages/Signup";
+import SignupDoctorPage from "./pages/SignupDoctor";
 import HomePage from "./pages/Home";
 import DashboardPage from "./pages/Dashboard"
 
@@ -50,6 +51,7 @@ function App() {
             {!token && <Route path="/home" component={HomePage} />}
             {!token && <Route path="/login" component={LoginPage} />}
             {!token && <Route path="/signup" component={SignupPage} />}
+            {!token && <Route path="/signupdoctor" component={SignupDoctorPage} />}
 
             {token && <Redirect from="/" to="/dashboard" exact/>}
             {token && <Redirect from="/login" to="/dashboard"/>}

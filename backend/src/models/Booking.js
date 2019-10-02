@@ -12,7 +12,11 @@ const bookingSchema = new Schema(
     patient: {
       type: Schema.Types.ObjectId,
       ref: "Patient"
-    }
+    },
+    doctor: {
+        type: Schema.Types.ObjectId,
+        ref: "Doctor"
+    },
   },
   { timestamps: true }
 );
