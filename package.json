@@ -16,7 +16,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.13",
     "merge-graphql-schemas": "^1.5.8",
-    "mongoose": "^5.5.11",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.19.1"
   }
 }
